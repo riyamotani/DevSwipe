@@ -1,0 +1,16 @@
+{
+  "name": "devswipe",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node scr/app.js",
+    "dev": "nodemon scr/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Riya Motani",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
