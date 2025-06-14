@@ -24,7 +24,14 @@ router.post("/signup", async (req, res) => {
       emailId,
       password: passwordHash,
     });
-    await newUser.save();
+    const savedUser = await newUser.save();
+    const token = await savedUser.getJWT();
+
+    res.cookie("token", token, {
+      expires: new Date(Date.now() + 8 * 3600000),
+    });
+
+    res.json({ message: "User Added successfully!", data: savedUser });
     res.send("User added successfully!");
   } catch (err) {
     res.status(400).send("Error saving the user!" + err.message);
@@ -50,7 +57,7 @@ router.post("/login", async (req, res) => {
       res.cookie("token", token, {
         expires: new Date(Date.now() + 8 * 3600000),
       });
-      res.send("Logged in successfully!");
+      res.send(user);
     } else {
       throw new Error("Invalid credentials");
     }
@@ -64,7 +71,7 @@ router.post("/logout", async (req, res) => {
     res.cookie("token", null, {
       expires: new Date(Date.now()),
     });
-    res.send("Logged out successfully");
+    res.status(200).send("Logged out successfully");
   } catch (error) {
     res.status(400).send("Something went wrong");
   }

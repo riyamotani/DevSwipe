@@ -13,7 +13,7 @@ router.get("/profile/view", userAuth, async (req, res) => {
     }
 });
 
-router.patch("/profile/edit", userAuth, async (req, res) => {
+router.post("/profile/edit", userAuth, async (req, res) => {
     try {
         if(!validateEditProfileData(req)){
             throw new Error("Invalid edit request!")
@@ -44,15 +44,6 @@ router.get("/user", async (req, res) => {
         } else {
             res.send(user);
         }
-    } catch (error) {
-        res.status(400).send("Something went wrong!");
-    }
-});
-
-router.get("/feed", async (req, res) => {
-    try {
-        const users = await User.find({});
-        res.send(users);
     } catch (error) {
         res.status(400).send("Something went wrong!");
     }
